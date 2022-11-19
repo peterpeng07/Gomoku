@@ -1,0 +1,9 @@
+<h3>Current Player: {{player}}</h3>
+<button (click)="newGame()">New</button>
+
+<p *ngIf="winner">{{winner}} won the game!</p>
+
+<div class="board">
+  <app-block class="block" *ngFor="let block of blocks; let i = index" [value]="block" (click)="makeMove(i)">
+  </app-block>
+</div>
