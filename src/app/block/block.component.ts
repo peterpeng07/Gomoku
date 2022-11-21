@@ -7,6 +7,6 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class BlockComponent {
 
-  @Input() value: string | undefined;
+  @Input() value: boolean | undefined;
 
 }
