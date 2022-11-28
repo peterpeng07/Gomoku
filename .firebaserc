@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "gomoku-fc9fd": {
+      "hosting": {
+        "gomoku": [
+          "gomoku-fc9fd"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "gomoku-fc9fd"
+  }
+}
