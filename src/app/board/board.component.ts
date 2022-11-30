@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../services/game.service';
 import { Game } from '../services/game.service';
+import { MatDialog } from '@angular/material/dialog';
+import { StartingDialogComponent } from '../starting-dialog/starting-dialog.component';
 
 @Component({
   selector: 'app-board',
@@ -14,7 +16,7 @@ export class BoardComponent implements OnInit {
   public gameOver: boolean = false;
 
 
-  constructor(private gameSvc: GameService) {
+  constructor(public dialog: MatDialog, private gameSvc: GameService) {
     this.gameSvc.game$.subscribe(res => {
       this.xIsNext = res.current;
       this.blocks = res.board;
@@ -22,14 +24,23 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.newGame();
+    this.openDialog();
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(StartingDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   newGame(): void {
-    this.blocks = Array(225).fill(null);
-    this.winner = null;
-    this.xIsNext = true;
-    this.gameOver = false;
+
+    // this.blocks = Array(225).fill(null);
+    // this.winner = null;
+    // this.xIsNext = true;
+    // this.gameOver = false;
   }
 
   get player() {
