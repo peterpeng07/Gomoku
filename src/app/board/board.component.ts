@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GameService } from '../services/game.service';
+import { Game } from '../services/game.service';
 
 @Component({
   selector: 'app-board',
@@ -11,7 +13,13 @@ export class BoardComponent implements OnInit {
   public winner: string | null = null;
   public gameOver: boolean = false;
 
-  constructor() { }
+
+  constructor(private gameSvc: GameService) {
+    this.gameSvc.game$.subscribe(res => {
+      this.xIsNext = res.current;
+      this.blocks = res.board;
+    })
+  }
 
   ngOnInit(): void {
     // this.newGame();
@@ -33,6 +41,11 @@ export class BoardComponent implements OnInit {
       this.blocks.splice(id, 1, this.xIsNext);
       this.calculateWinner();
       this.xIsNext = !this.xIsNext;
+
+      // const game: Game = {
+      //   board: this.blocks
+      // }
+      // this.gameSvc.update(game);
     }
   }
 
