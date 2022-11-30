@@ -31,8 +31,19 @@ export class BoardComponent implements OnInit {
     const dialogRef = this.dialog.open(StartingDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
+      this.startGame(result);
       console.log(`Dialog result: ${result}`);
     });
+  }
+
+  startGame(name: string): void {
+    // start new game
+    const game: Game = {
+      player1: name,
+      board: Array(225).fill(null),
+      current: true
+    }
+    this.gameSvc.newGame(game);
   }
 
   newGame(): void {

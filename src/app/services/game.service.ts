@@ -14,11 +14,13 @@ export interface Game {
   providedIn: 'root'
 })
 export class GameService {
+  private gamesCollection: AngularFirestoreCollection;
   private gameDoc: AngularFirestoreDocument<Game>;
   public board: any[] = [];
   public game$ = new BehaviorSubject<Game>({ player1: '', player2: '', board: [], current: true });
 
   constructor(private db: AngularFirestore) {
+    this.gamesCollection = db.collection<Game>('games');
     this.gameDoc = db.doc<Game>('/games/50Bai8fy6JihpRqyAwDF');
     this.gameDoc.valueChanges().subscribe(res => {
       if (res) {
@@ -27,6 +29,10 @@ export class GameService {
         this.game$.next(res);
       }
     })
+  }
+
+  newGame(game: Game): void {
+    this.gamesCollection.add(game);
   }
 
   update(game: Game): void {
