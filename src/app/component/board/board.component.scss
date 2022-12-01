@@ -1,3 +1,9 @@
+.header,
+.over,
+.board {
+  margin: 20px;
+}
+
 .board {
   display: grid;
   grid-template-columns: repeat(15, 20px);

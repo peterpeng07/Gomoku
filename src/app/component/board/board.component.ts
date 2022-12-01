@@ -107,13 +107,6 @@ export class BoardComponent implements OnInit {
     })
   }
 
-  newGame(): void {
-    // this.blocks = Array(225).fill(null);
-    // this.winner = null;
-    // this.xIsNext = true;
-    // this.gameOver = false;
-  }
-
   get player() {
     return this.xIsNext ? 'Black' : 'White';
   }
@@ -255,6 +248,11 @@ export class BoardComponent implements OnInit {
         winner: this.player
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.gameSvc.game$.unsubscribe();
+
   }
 }
 

@@ -1,9 +1,12 @@
-<h1>Gomoku</h1>
+<div class="header">
+  <h1>Gomoku</h1>
+  <h3>Opponent: {{opponentName === '' ? 'waiting for opponent...' : opponentName}}</h3>
+  <h3>Current Player: {{player}} ({{playerTurn === xIsNext ? 'You' : opponentName}})</h3>
+</div>
 
-<h3>Opponent: {{opponentName === '' ? 'waiting for opponent...' : opponentName}}</h3>
-<h3 *ngIf="!this.gameOver">Current Player: {{player}} ({{playerTurn === xIsNext ? 'You' : opponentName}})</h3>
-
-<p *ngIf="winner">{{winner}} won the game!</p>
+<div class="over" [hidden]="!this.gameOver">
+  <p *ngIf="winner">{{winner}} won the game! Refresh the page to play again!</p>
+</div>
 
 <div class="board">
   <app-block class="block" *ngFor="let block of blocks; let i = index" [value]="block" (click)="move(i)">
