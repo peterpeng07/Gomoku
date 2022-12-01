@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { WaitingDialogComponent } from './waiting-dialog/waiting-dialog.component';
 import { JoiningDialogComponent } from './joining-dialog/joining-dialog.component';
+import { WinningDialogComponent } from './winning-dialog/winning-dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { JoiningDialogComponent } from './joining-dialog/joining-dialog.componen
     BlockComponent,
     StartingDialogComponent,
     WaitingDialogComponent,
-    JoiningDialogComponent
+    JoiningDialogComponent,
+    WinningDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { StartingDialogComponent } from '../starting-dialog/starting-dialog.comp
 import { v4 as uuidv4 } from 'uuid';
 import { WaitingDialogComponent } from '../waiting-dialog/waiting-dialog.component';
 import { JoiningDialogComponent } from '../joining-dialog/joining-dialog.component';
+import { WinningDialogComponent } from '../winning-dialog/winning-dialog.component';
 
 @Component({
   selector: 'app-board',
@@ -22,7 +23,6 @@ export class BoardComponent implements OnInit {
   public xIsNext: boolean = true;
   public winner: string | null = null;
   public gameOver: boolean = false;
-
 
   constructor(public dialog: MatDialog, private gameSvc: GameService) { }
 
@@ -88,11 +88,21 @@ export class BoardComponent implements OnInit {
           }
         })
       }
+
       this.xIsNext = res.current;
       this.blocks = res.board;
+
       if (res.winner) {
-        this.winner = res.winner;
-        this.gameOver = true;
+        if (!this.winner) {
+          this.winner = res.winner;
+          this.gameOver = true;
+          this.dialog.open(WinningDialogComponent, {
+            data: {
+              isWinner: false,
+              winner: this.opponentName
+            }
+          })
+        }
       }
     })
   }
@@ -154,10 +164,7 @@ export class BoardComponent implements OnInit {
           count_v = 0;
         }
         if (count_h === 5 || count_v === 5) {
-          this.winner = this.player;
-          this.gameOver = true;
-          console.log(this.player + " wins!");
-          this.gameSvc.win(this.player);
+          this.winGame();
         }
       }
     }
@@ -231,11 +238,23 @@ export class BoardComponent implements OnInit {
           }
         }
         if (count_l === 5 || count_r === 5 || count_dl === 5 || count_dr === 5) {
-          this.winner = this.player;
-          this.gameOver = true;
-          console.log(this.player + " wins!");
+          this.winGame();
         }
       }
     }
   }
+
+  winGame() {
+    this.winner = this.player;
+    this.gameOver = true;
+    console.log(this.player + " wins!");
+    this.gameSvc.win(this.player);
+    this.dialog.open(WinningDialogComponent, {
+      data: {
+        isWinner: true,
+        winner: this.player
+      }
+    });
+  }
 }
+
