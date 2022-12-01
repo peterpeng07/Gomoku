@@ -8,6 +8,7 @@ export interface Game {
   player2?: string;
   board: any[];
   current: boolean;
+  winner?: string;
 }
 
 @Injectable({
@@ -65,6 +66,12 @@ export class GameService {
   update(newBoard: any[], next: boolean): void {
     if (this.gameDoc) {
       this.gameDoc.update({ board: newBoard, current: next });
+    }
+  }
+
+  win(name: string): void {
+    if (this.gameDoc) {
+      this.gameDoc.update({ winner: name });
     }
   }
 }

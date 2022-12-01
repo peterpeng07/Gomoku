@@ -33,7 +33,6 @@ export class BoardComponent implements OnInit {
       this.playerName = result;
       this.startGame(this.playerName);
       console.log(`Name entered: ${result}`);
-
     });
   }
 
@@ -62,6 +61,10 @@ export class BoardComponent implements OnInit {
     this.gameSvc.game$.subscribe(res => {
       this.xIsNext = res.current;
       this.blocks = res.board;
+      if (res.winner) {
+        this.winner = res.winner;
+        this.gameOver = true;
+      }
     })
   }
 
@@ -125,6 +128,7 @@ export class BoardComponent implements OnInit {
           this.winner = this.player;
           this.gameOver = true;
           console.log(this.player + " wins!");
+          this.gameSvc.win(this.player);
         }
       }
     }
