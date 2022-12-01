@@ -74,4 +74,15 @@ export class GameService {
       this.gameDoc.update({ winner: name });
     }
   }
+
+  quit(player: boolean, opponent: string): void {
+    if (this.gameDoc) {
+      if (player) {
+        this.gameDoc.update({ player1: '', winner: opponent });
+      } else {
+        this.gameDoc.update({ player2: '', winner: opponent });
+      }
+
+    }
+  }
 }

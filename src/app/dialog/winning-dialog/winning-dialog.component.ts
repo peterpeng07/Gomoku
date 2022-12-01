@@ -3,7 +3,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 interface winnerData {
   isWinner: boolean,
-  winner: string
+  winner: string,
+  opponent?: string
 }
 
 @Component({

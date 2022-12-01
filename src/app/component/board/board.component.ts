@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { GameService } from '../../services/game.service';
 import { Game } from '../../services/game.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -75,7 +75,7 @@ export class BoardComponent implements OnInit {
         }
       });
     }
-    // subscribe to board changes
+    // subscribe to game changes
     this.gameSvc.game$.subscribe(res => {
       if (this.opponentName === '' && res.player2) {
         console.log(res.player2);
@@ -96,12 +96,22 @@ export class BoardComponent implements OnInit {
         if (!this.winner) {
           this.winner = res.winner;
           this.gameOver = true;
-          this.dialog.open(WinningDialogComponent, {
-            data: {
-              isWinner: false,
-              winner: this.opponentName
-            }
-          })
+          if (res.player1 === '' || res.player2 === '') {
+            this.dialog.open(WinningDialogComponent, {
+              data: {
+                isWinner: this.winner === this.playerName,
+                winner: this.winner,
+                opponent: this.opponentName
+              }
+            })
+          } else {
+            this.dialog.open(WinningDialogComponent, {
+              data: {
+                isWinner: this.winner === this.playerName,
+                winner: this.winner,
+              }
+            })
+          }
         }
       }
     })
@@ -250,9 +260,12 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  ngOnDestroy() {
+  @HostListener('window:beforeunload')
+  beforeUnloadHandler() {
+    if (!this.gameOver) {
+      this.gameSvc.quit(this.playerTurn, this.opponentName);
+    }
     this.gameSvc.game$.unsubscribe();
-
   }
 }
 
