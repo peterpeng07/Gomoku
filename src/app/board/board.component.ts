@@ -3,6 +3,7 @@ import { GameService } from '../services/game.service';
 import { Game } from '../services/game.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StartingDialogComponent } from '../starting-dialog/starting-dialog.component';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-board',
@@ -10,6 +11,10 @@ import { StartingDialogComponent } from '../starting-dialog/starting-dialog.comp
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
+  public playerName: string = '';
+  public gameID: string = '';
+  private playerTurn: boolean = true;
+
   public blocks: any[] = Array(225).fill(null);
   private xIsNext: boolean = true;
   public winner: string | null = null;
@@ -17,10 +22,10 @@ export class BoardComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, private gameSvc: GameService) {
-    this.gameSvc.game$.subscribe(res => {
-      this.xIsNext = res.current;
-      this.blocks = res.board;
-    })
+    // this.gameSvc.game$.subscribe(res => {
+    //   this.xIsNext = res.current;
+    //   this.blocks = res.board;
+    // })
   }
 
   ngOnInit(): void {
@@ -31,20 +36,40 @@ export class BoardComponent implements OnInit {
     const dialogRef = this.dialog.open(StartingDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      this.startGame(result);
-      console.log(`Dialog result: ${result}`);
+      this.playerName = result;
+      this.startGame(this.playerName);
+      console.log(`Name entered: ${result}`);
     });
   }
 
   startGame(name: string): void {
-    // start new game
-    const game: Game = {
-      player1: name,
-      board: Array(225).fill(null),
-      current: true
+    // look for open games
+    const openGame = this.gameSvc.findOpenGame();
+    if (openGame) {
+      this.gameID = openGame;
+      console.log("open game found!");
+      this.gameSvc.joinGame(openGame, this.playerName);
+      this.playerTurn = false;
+    } else {
+      // start new game
+      console.log("creating new game...");
+      this.gameID = uuidv4();
+      const game: Game = {
+        id: this.gameID,
+        player1: name,
+        board: Array(225).fill(null),
+        current: true
+      }
+      this.gameSvc.newGame(game);
+      this.playerTurn = true;
     }
-    this.gameSvc.newGame(game);
+
+    this.gameSvc.game$.subscribe(res => {
+      this.xIsNext = res.current;
+      this.blocks = res.board;
+    })
   }
+
 
   newGame(): void {
 
@@ -59,15 +84,12 @@ export class BoardComponent implements OnInit {
   }
 
   move(id: number) {
-    if (!this.gameOver && this.blocks[id] === null) {
+    if (!this.gameOver && this.blocks[id] === null && this.xIsNext === this.playerTurn) {
       this.blocks.splice(id, 1, this.xIsNext);
       this.calculateWinner();
       this.xIsNext = !this.xIsNext;
 
-      // const game: Game = {
-      //   board: this.blocks
-      // }
-      // this.gameSvc.update(game);
+      this.gameSvc.update(this.blocks, this.xIsNext);
     }
   }
 
