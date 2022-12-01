@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { StartingDialogComponent } from './starting-dialog/starting-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,

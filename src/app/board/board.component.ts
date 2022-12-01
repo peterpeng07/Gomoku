@@ -28,11 +28,12 @@ export class BoardComponent implements OnInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(StartingDialogComponent);
+    const dialogRef = this.dialog.open(StartingDialogComponent, { disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       this.playerName = result;
       this.startGame(this.playerName);
       console.log(`Name entered: ${result}`);
+
     });
   }
 

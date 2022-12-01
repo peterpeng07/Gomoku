@@ -5,6 +5,6 @@
     <input type="text" size="20" [(ngModel)]="name">
   </label>
 </div>
-<div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="name">Start Game</button>
+<div mat-dialog-actions align="end">
+  <button mat-button class="start" [disabled]="!name" [mat-dialog-close]="name">Start Game</button>
 </div>
