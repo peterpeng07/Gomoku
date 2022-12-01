@@ -21,12 +21,7 @@ export class BoardComponent implements OnInit {
   public gameOver: boolean = false;
 
 
-  constructor(public dialog: MatDialog, private gameSvc: GameService) {
-    // this.gameSvc.game$.subscribe(res => {
-    //   this.xIsNext = res.current;
-    //   this.blocks = res.board;
-    // })
-  }
+  constructor(public dialog: MatDialog, private gameSvc: GameService) { }
 
   ngOnInit(): void {
     this.openDialog();
@@ -34,7 +29,6 @@ export class BoardComponent implements OnInit {
 
   openDialog() {
     const dialogRef = this.dialog.open(StartingDialogComponent);
-
     dialogRef.afterClosed().subscribe(result => {
       this.playerName = result;
       this.startGame(this.playerName);
@@ -46,13 +40,13 @@ export class BoardComponent implements OnInit {
     // look for open games
     const openGame = this.gameSvc.findOpenGame();
     if (openGame) {
+      // join a game
+      console.log(`joining game: ${openGame}...`)
       this.gameID = openGame;
-      console.log("open game found!");
       this.gameSvc.joinGame(openGame, this.playerName);
       this.playerTurn = false;
     } else {
       // start new game
-      console.log("creating new game...");
       this.gameID = uuidv4();
       const game: Game = {
         id: this.gameID,
@@ -63,16 +57,14 @@ export class BoardComponent implements OnInit {
       this.gameSvc.newGame(game);
       this.playerTurn = true;
     }
-
+    // subscribe to board changes
     this.gameSvc.game$.subscribe(res => {
       this.xIsNext = res.current;
       this.blocks = res.board;
     })
   }
 
-
   newGame(): void {
-
     // this.blocks = Array(225).fill(null);
     // this.winner = null;
     // this.xIsNext = true;
@@ -88,7 +80,6 @@ export class BoardComponent implements OnInit {
       this.blocks.splice(id, 1, this.xIsNext);
       this.calculateWinner();
       this.xIsNext = !this.xIsNext;
-
       this.gameSvc.update(this.blocks, this.xIsNext);
     }
   }
@@ -132,11 +123,11 @@ export class BoardComponent implements OnInit {
         if (count_h === 5 || count_v === 5) {
           this.winner = this.player;
           this.gameOver = true;
-          console.log(this.player + " wins!")
+          console.log(this.player + " wins!");
         }
       }
     }
-
+    // check for diagonal wins
     let p_r: boolean | null = null;
     let p_l: boolean | null = null;
     let p_dr: boolean | null = null;
@@ -179,7 +170,6 @@ export class BoardComponent implements OnInit {
           p_l = null;
           count_l = 0;
         }
-
         if (i > 0) {
           let i_dr = 15 * i + j * 16;
           let i_dl = (15 * (i + 1) - 1) + 14 * j;
@@ -206,11 +196,10 @@ export class BoardComponent implements OnInit {
             count_dl = 0;
           }
         }
-
         if (count_l === 5 || count_r === 5 || count_dl === 5 || count_dr === 5) {
           this.winner = this.player;
           this.gameOver = true;
-          console.log(this.player + " wins!")
+          console.log(this.player + " wins!");
         }
       }
     }
