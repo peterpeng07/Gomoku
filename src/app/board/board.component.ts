@@ -4,6 +4,8 @@ import { Game } from '../services/game.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StartingDialogComponent } from '../starting-dialog/starting-dialog.component';
 import { v4 as uuidv4 } from 'uuid';
+import { WaitingDialogComponent } from '../waiting-dialog/waiting-dialog.component';
+import { JoiningDialogComponent } from '../joining-dialog/joining-dialog.component';
 
 @Component({
   selector: 'app-board',
@@ -12,11 +14,12 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class BoardComponent implements OnInit {
   public playerName: string = '';
+  public opponentName: string = '';
   public gameID: string = '';
-  private playerTurn: boolean = true;
+  public playerTurn: boolean = true;
 
   public blocks: any[] = Array(225).fill(null);
-  private xIsNext: boolean = true;
+  public xIsNext: boolean = true;
   public winner: string | null = null;
   public gameOver: boolean = false;
 
@@ -24,10 +27,10 @@ export class BoardComponent implements OnInit {
   constructor(public dialog: MatDialog, private gameSvc: GameService) { }
 
   ngOnInit(): void {
-    this.openDialog();
+    this.openStartingDialog();
   }
 
-  openDialog() {
+  openStartingDialog() {
     const dialogRef = this.dialog.open(StartingDialogComponent, { disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       this.playerName = result;
@@ -39,12 +42,20 @@ export class BoardComponent implements OnInit {
   startGame(name: string): void {
     // look for open games
     const openGame = this.gameSvc.findOpenGame();
-    if (openGame) {
-      // join a game
+    if (openGame[0] && openGame[1]) {
+      // join a game if there's one open
       console.log(`joining game: ${openGame}...`)
-      this.gameID = openGame;
-      this.gameSvc.joinGame(openGame, this.playerName);
+      const dialogRef = this.dialog.open(WaitingDialogComponent, {
+        disableClose: true,
+        data: {
+          opponent: openGame[1],
+          id: openGame[0]
+        }
+      });
+      this.gameID = openGame[0];
+      this.gameSvc.joinGame(openGame[0], this.playerName);
       this.playerTurn = false;
+      this.opponentName = openGame[1];
     } else {
       // start new game
       this.gameID = uuidv4();
@@ -56,9 +67,27 @@ export class BoardComponent implements OnInit {
       }
       this.gameSvc.newGame(game);
       this.playerTurn = true;
+      const dialogRef = this.dialog.open(WaitingDialogComponent, {
+        disableClose: true,
+        data: {
+          opponent: null,
+          id: this.gameID
+        }
+      });
     }
     // subscribe to board changes
     this.gameSvc.game$.subscribe(res => {
+      if (this.opponentName === '' && res.player2) {
+        console.log(res.player2);
+
+        this.opponentName = res.player2;
+        this.dialog.open(JoiningDialogComponent, {
+          disableClose: true,
+          data: {
+            name: res.player2
+          }
+        })
+      }
       this.xIsNext = res.current;
       this.blocks = res.board;
       if (res.winner) {

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title *ngIf="data.opponent">Joining a game with {{data.opponent}}!</h1>
+<h1 mat-dialog-title *ngIf="data.opponent === null">Game Created! Waiting for opponent...</h1>
+
+<p>Game ID: {{data.id}}</p>
+
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>OK</button>
+</div>

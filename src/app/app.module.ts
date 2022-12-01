@@ -13,15 +13,18 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { StartingDialogComponent } from './starting-dialog/starting-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { WaitingDialogComponent } from './waiting-dialog/waiting-dialog.component';
+import { JoiningDialogComponent } from './joining-dialog/joining-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
     BlockComponent,
-    StartingDialogComponent
+    StartingDialogComponent,
+    WaitingDialogComponent,
+    JoiningDialogComponent
   ],
-  entryComponents: [StartingDialogComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

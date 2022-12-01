@@ -30,14 +30,14 @@ export class GameService {
     })
   }
 
-  findOpenGame(): string | undefined {
+  findOpenGame(): [string | undefined, string | undefined] {
     for (let game of this.games) {
       if (game.player2 === undefined) {
         console.log("found open game id: " + game.id);
-        return game.id;
+        return [game.id, game.player1];
       }
     }
-    return undefined;
+    return [undefined, undefined];
   }
 
   joinGame(id: string, name: string): void {

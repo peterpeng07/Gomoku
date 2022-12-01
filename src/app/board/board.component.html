@@ -1,7 +1,7 @@
 <h1>Gomoku</h1>
 
-<h3 *ngIf="!this.gameOver">Current Player: {{player}}</h3>
-<!-- <button (click)="newGame()">Start Over</button> -->
+<h3>Opponent: {{opponentName === '' ? 'waiting for opponent...' : opponentName}}</h3>
+<h3 *ngIf="!this.gameOver">Current Player: {{player}} ({{playerTurn === xIsNext ? 'You' : opponentName}})</h3>
 
 <p *ngIf="winner">{{winner}} won the game!</p>
 
