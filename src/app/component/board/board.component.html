@@ -12,3 +12,5 @@
   <app-block class="block" *ngFor="let block of blocks; let i = index" [value]="block" (click)="move(i)">
   </app-block>
 </div>
+
+<button (click)="this.delete()">delete</button>

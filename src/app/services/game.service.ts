@@ -75,14 +75,23 @@ export class GameService {
     }
   }
 
-  quit(player: boolean, opponent: string): void {
+  quit(player: boolean, opponent?: string): void {
     if (this.gameDoc) {
-      if (player) {
-        this.gameDoc.update({ player1: '', winner: opponent });
+      if (opponent) {
+        player ? this.gameDoc.update({ player1: '', winner: opponent }) : this.gameDoc.update({ player2: '', winner: opponent });
       } else {
-        this.gameDoc.update({ player2: '', winner: opponent });
+        player ? this.gameDoc.update({ player1: '' }) : this.gameDoc.update({ player2: '' });
       }
+    }
+  }
 
+  deleteGame(): void {
+    if (this.gameDoc) {
+      localStorage.setItem("hi", "deleting");
+      this.gameDoc.delete().catch(e => { localStorage.setItem("error", e) }).then(() => { localStorage.setItem("finished", "finished") });
+      localStorage.setItem("done", "done");
+    } else {
+      localStorage.setItem("ohno", "can't");
     }
   }
 }

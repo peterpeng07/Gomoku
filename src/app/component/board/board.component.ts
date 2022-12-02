@@ -24,6 +24,8 @@ export class BoardComponent implements OnInit {
   public winner: string | null = null;
   public gameOver: boolean = false;
 
+  private deleteReady: boolean = false;
+
   constructor(public dialog: MatDialog, private gameSvc: GameService) { }
 
   ngOnInit(): void {
@@ -112,6 +114,10 @@ export class BoardComponent implements OnInit {
               }
             })
           }
+        }
+        if (res.player1 === '' || res.player2 === '') {
+          this.deleteReady = true;
+          console.log("ready to delete")
         }
       }
     })
@@ -264,8 +270,20 @@ export class BoardComponent implements OnInit {
   beforeUnloadHandler() {
     if (!this.gameOver) {
       this.gameSvc.quit(this.playerTurn, this.opponentName);
+    } else {
+      this.gameSvc.quit(this.playerTurn);
     }
-    this.gameSvc.game$.unsubscribe();
+    // this.gameSvc.game$.unsubscribe();
+    // this.deleteReady ? this.gameSvc.deleteGame() : null;
+    this.delete();
+  }
+
+  delete() {
+    if (this.deleteReady) {
+      this.gameSvc.deleteGame()
+    } else {
+      console.log("can't")
+    }
   }
 }
 
