@@ -24,8 +24,6 @@ export class BoardComponent implements OnInit {
   public winner: string | null = null;
   public gameOver: boolean = false;
 
-  private deleteReady: boolean = false;
-
   constructor(public dialog: MatDialog, private gameSvc: GameService) { }
 
   ngOnInit(): void {
@@ -37,7 +35,6 @@ export class BoardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.playerName = result;
       this.startGame(this.playerName);
-      console.log(`Name entered: ${result}`);
     });
   }
 
@@ -46,7 +43,6 @@ export class BoardComponent implements OnInit {
     const openGame = this.gameSvc.findOpenGame();
     if (openGame[0] && openGame[1]) {
       // join a game if there's one open
-      console.log(`joining game: ${openGame}...`)
       const dialogRef = this.dialog.open(WaitingDialogComponent, {
         disableClose: true,
         data: {
@@ -80,11 +76,8 @@ export class BoardComponent implements OnInit {
     // subscribe to game changes
     this.gameSvc.game$.subscribe(res => {
       if (this.opponentName === '' && res.player2) {
-        console.log(res.player2);
-
         this.opponentName = res.player2;
         this.dialog.open(JoiningDialogComponent, {
-          disableClose: true,
           data: {
             name: res.player2
           }
@@ -100,6 +93,7 @@ export class BoardComponent implements OnInit {
           this.gameOver = true;
           if (res.player1 === '' || res.player2 === '') {
             this.dialog.open(WinningDialogComponent, {
+              disableClose: true,
               data: {
                 isWinner: res.winner === this.playerName,
                 winner: this.winner,
@@ -108,16 +102,13 @@ export class BoardComponent implements OnInit {
             })
           } else {
             this.dialog.open(WinningDialogComponent, {
+              disableClose: true,
               data: {
                 isWinner: res.winner === this.playerName,
                 winner: res.winner,
               }
             })
           }
-        }
-        if (res.player1 === '' || res.player2 === '') {
-          this.deleteReady = true;
-          console.log("ready to delete")
         }
       }
     })
@@ -256,9 +247,9 @@ export class BoardComponent implements OnInit {
   winGame() {
     this.winner = this.playerName;
     this.gameOver = true;
-    console.log(this.playerName + " wins!");
     this.gameSvc.win(this.playerName);
     this.dialog.open(WinningDialogComponent, {
+      disableClose: true,
       data: {
         isWinner: true,
         winner: this.winner
@@ -273,17 +264,7 @@ export class BoardComponent implements OnInit {
     } else {
       this.gameSvc.quit(this.playerTurn);
     }
-    // this.gameSvc.game$.unsubscribe();
-    // this.deleteReady ? this.gameSvc.deleteGame() : null;
-    this.delete();
-  }
-
-  delete() {
-    if (this.deleteReady) {
-      this.gameSvc.deleteGame()
-    } else {
-      console.log("can't")
-    }
+    this.gameSvc.deleteGame()
   }
 }
 

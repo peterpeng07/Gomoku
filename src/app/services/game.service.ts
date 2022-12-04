@@ -33,7 +33,6 @@ export class GameService {
   findOpenGame(): [string | undefined, string | undefined] {
     for (let game of this.games) {
       if (game.player2 === undefined) {
-        console.log("found open game id: " + game.id);
         return [game.id, game.player1];
       }
     }
@@ -47,7 +46,6 @@ export class GameService {
   }
 
   newGame(game: Game): void {
-    console.log("creating new game...");
     this.gameDoc = this.gamesCollection.doc(game.id);
     this.gameDoc.set(game);
     this.pushBoard();
@@ -86,12 +84,7 @@ export class GameService {
   }
 
   deleteGame(): void {
-    if (this.gameDoc) {
-      localStorage.setItem("hi", "deleting");
-      this.gameDoc.delete().catch(e => { localStorage.setItem("error", e) }).then(() => { localStorage.setItem("finished", "finished") });
-      localStorage.setItem("done", "done");
-    } else {
-      localStorage.setItem("ohno", "can't");
-    }
+    localStorage.setItem("hi", "deleting");
+    this.gameDoc?.delete().catch(e => { localStorage.setItem("error", e) }).then(() => { localStorage.setItem("finished", "finished") });
   }
 }
