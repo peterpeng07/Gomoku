@@ -1,11 +1,8 @@
 <div class="header">
   <h1>Gomoku</h1>
+  <p *ngIf="this.gameID">Game ID: {{this.gameID}}</p>
   <h3>Opponent: {{opponentName === '' ? 'waiting for opponent...' : opponentName}}</h3>
-  <h3 [hidden]="this.gameOver">Current Player: {{player}} ({{playerTurn === xIsNext ? 'You' : opponentName}})</h3>
-</div>
-
-<div class="over" [hidden]="!this.gameOver">
-  <p *ngIf="winner">{{winner}} won the game! Refresh the page to play again!</p>
+  <h3 [hidden]="this.gameOver">Current Player: {{playerTurn === xIsNext ? 'You' : opponentName}} ({{player}})</h3>
 </div>
 
 <div class="board">
@@ -13,4 +10,6 @@
   </app-block>
 </div>
 
-<button (click)="this.delete()">delete</button>
+<div class="over" [hidden]="!this.gameOver">
+  <p *ngIf="winner">{{winner === this.playerName ? 'You' : winner}} won the game! Refresh the page to play again!</p>
+</div>

@@ -101,7 +101,7 @@ export class BoardComponent implements OnInit {
           if (res.player1 === '' || res.player2 === '') {
             this.dialog.open(WinningDialogComponent, {
               data: {
-                isWinner: this.winner === this.playerName,
+                isWinner: res.winner === this.playerName,
                 winner: this.winner,
                 opponent: this.opponentName
               }
@@ -109,8 +109,8 @@ export class BoardComponent implements OnInit {
           } else {
             this.dialog.open(WinningDialogComponent, {
               data: {
-                isWinner: this.winner === this.playerName,
-                winner: this.winner,
+                isWinner: res.winner === this.playerName,
+                winner: res.winner,
               }
             })
           }
@@ -254,14 +254,14 @@ export class BoardComponent implements OnInit {
   }
 
   winGame() {
-    this.winner = this.player;
+    this.winner = this.playerName;
     this.gameOver = true;
-    console.log(this.player + " wins!");
-    this.gameSvc.win(this.player);
+    console.log(this.playerName + " wins!");
+    this.gameSvc.win(this.playerName);
     this.dialog.open(WinningDialogComponent, {
       data: {
         isWinner: true,
-        winner: this.player
+        winner: this.winner
       }
     });
   }
