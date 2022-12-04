@@ -78,9 +78,9 @@ export class GameService {
   quit(player: boolean, opponent?: string): void {
     if (this.gameDoc) {
       if (opponent) {
-        player ? this.gameDoc.update({ player1: '', winner: opponent }) : this.gameDoc.update({ player2: '', winner: opponent });
+        this.gameDoc.update(player ? { player1: '', winner: opponent } : { player2: '', winner: opponent })
       } else {
-        player ? this.gameDoc.update({ player1: '' }) : this.gameDoc.update({ player2: '' });
+        this.gameDoc.update(player ? { player1: '' } : { player2: '' })
       }
     }
   }
