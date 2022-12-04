@@ -10,12 +10,12 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
-import { StartingDialogComponent } from './dialog/starting-dialog/starting-dialog.component';
+import { StartingDialogComponent } from './component/dialog/starting-dialog/starting-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-import { WaitingDialogComponent } from './dialog/waiting-dialog/waiting-dialog.component';
-import { JoiningDialogComponent } from './component/block/joining-dialog/joining-dialog.component';
-import { WinningDialogComponent } from './dialog/winning-dialog/winning-dialog.component';
+import { WaitingDialogComponent } from './component/dialog/waiting-dialog/waiting-dialog.component';
+import { JoiningDialogComponent } from './component/dialog/joining-dialog/joining-dialog.component';
+import { WinningDialogComponent } from './component/dialog/winning-dialog/winning-dialog.component';
 
 @NgModule({
   declarations: [

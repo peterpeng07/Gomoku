@@ -2,11 +2,11 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { GameService } from '../../services/game.service';
 import { Game } from '../../services/game.service';
 import { MatDialog } from '@angular/material/dialog';
-import { StartingDialogComponent } from '../../dialog/starting-dialog/starting-dialog.component';
+import { StartingDialogComponent } from '../dialog/starting-dialog/starting-dialog.component';
 import { v4 as uuidv4 } from 'uuid';
-import { WaitingDialogComponent } from '../../dialog/waiting-dialog/waiting-dialog.component';
-import { JoiningDialogComponent } from '../block/joining-dialog/joining-dialog.component';
-import { WinningDialogComponent } from '../../dialog/winning-dialog/winning-dialog.component';
+import { WaitingDialogComponent } from '../dialog/waiting-dialog/waiting-dialog.component';
+import { JoiningDialogComponent } from '../dialog/joining-dialog/joining-dialog.component';
+import { WinningDialogComponent } from '../dialog/winning-dialog/winning-dialog.component';
 
 @Component({
   selector: 'app-board',
