@@ -84,7 +84,6 @@ export class GameService {
   }
 
   deleteGame(): void {
-    localStorage.setItem("hi", "deleting");
-    this.gameDoc?.delete().catch(e => { localStorage.setItem("error", e) }).then(() => { localStorage.setItem("finished", "finished") });
+    this.gameDoc?.delete();
   }
 }
