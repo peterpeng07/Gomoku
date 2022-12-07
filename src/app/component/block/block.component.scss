@@ -1,38 +1,71 @@
-.cross {
-  position: absolute;
-}
+@import "../../../utilities/variables.scss";
 
-.cross:before,
-.cross::after {
+.block {
   position: absolute;
-  left: 10px;
-  content: ' ';
-  height: 20px;
-  width: 1px;
-  background-color: black;
-}
-
-.cross:after {
-  transform: rotate(90deg);
 }
 
 .black {
   position: absolute;
-  height: 14px;
-  width: 14px;
   background-color: black;
   border-radius: 50%;
-  left: 3px;
-  top: 3px;
 }
 
 .white {
   position: absolute;
-  height: 10px;
-  width: 10px;
-  border: 2px solid black;
   background-color: transparent;
   border-radius: 50%;
-  left: 3px;
-  top: 3px;
+}
+
+@media screen and (min-width: 992px) {
+
+  .black {
+    height: $piece-size-fixed;
+    width: $piece-size-fixed;
+    left: ($block-size-fixed - $piece-size-fixed) / 2;
+    top: ($block-size-fixed - $piece-size-fixed) / 2;
+  }
+
+  .white {
+    height: $piece-size-fixed - $piece-border-fixed * 2;
+    width: $piece-size-fixed - $piece-border-fixed * 2;
+    border: $piece-border-fixed solid black;
+    left: ($block-size-fixed - $piece-size-fixed) / 2;
+    top: ($block-size-fixed - $piece-size-fixed) / 2;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 992px) {
+
+  .black {
+    height: $piece-size-M;
+    width: $piece-size-M;
+    left: ($block-size-M - $piece-size-M) / 2;
+    top: ($block-size-M - $piece-size-M) / 2;
+  }
+
+  .white {
+    height: $piece-size-M - $piece-border-M * 2;
+    width: $piece-size-M - $piece-border-M * 2;
+    border: $piece-border-M solid black;
+    left: ($block-size-M - $piece-size-M) / 2;
+    top: ($block-size-M - $piece-size-M) / 2;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .black {
+    height: $piece-size-S;
+    width: $piece-size-S;
+    left: ($block-size-S - $piece-size-S) / 2;
+    top: ($block-size-S - $piece-size-S) / 2;
+  }
+
+  .white {
+    height: $piece-size-S - $piece-border-S * 2;
+    width: $piece-size-S - $piece-border-S * 2;
+    border: $piece-border-S solid black;
+    left: ($block-size-S - $piece-size-S) / 2;
+    top: ($block-size-S - $piece-size-S) / 2;
+  }
 }

@@ -5,7 +5,8 @@
   <h3 [hidden]="this.gameOver">Current Player: {{playerTurn === xIsNext ? 'You' : opponentName}} ({{player}})</h3>
 </div>
 
-<div class="board">
+<div class="board-container">
+  <img class="board" src="../../../assets/board.jpeg" />
   <app-block class="block" *ngFor="let block of blocks; let i = index" [value]="block" (click)="move(i)">
   </app-block>
 </div>
