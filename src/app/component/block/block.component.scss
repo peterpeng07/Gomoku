@@ -21,16 +21,16 @@
   .black {
     height: $piece-size-fixed;
     width: $piece-size-fixed;
-    left: ($block-size-fixed - $piece-size-fixed) / 2;
-    top: ($block-size-fixed - $piece-size-fixed) / 2;
+    left: calc(($block-size-fixed - $piece-size-fixed) / 2);
+    top: calc(($block-size-fixed - $piece-size-fixed) / 2);
   }
 
   .white {
-    height: $piece-size-fixed - $piece-border-fixed * 2;
-    width: $piece-size-fixed - $piece-border-fixed * 2;
+    height: calc($piece-size-fixed - $piece-border-fixed * 2);
+    width: calc($piece-size-fixed - $piece-border-fixed * 2);
     border: $piece-border-fixed solid black;
-    left: ($block-size-fixed - $piece-size-fixed) / 2;
-    top: ($block-size-fixed - $piece-size-fixed) / 2;
+    left: calc(($block-size-fixed - $piece-size-fixed) / 2);
+    top: calc(($block-size-fixed - $piece-size-fixed) / 2);
   }
 }
 
@@ -39,16 +39,16 @@
   .black {
     height: $piece-size-M;
     width: $piece-size-M;
-    left: ($block-size-M - $piece-size-M) / 2;
-    top: ($block-size-M - $piece-size-M) / 2;
+    left: calc(($block-size-M - $piece-size-M) / 2);
+    top: calc(($block-size-M - $piece-size-M) / 2);
   }
 
   .white {
-    height: $piece-size-M - $piece-border-M * 2;
-    width: $piece-size-M - $piece-border-M * 2;
+    height: calc($piece-size-M - $piece-border-M * 2);
+    width: calc($piece-size-M - $piece-border-M * 2);
     border: $piece-border-M solid black;
-    left: ($block-size-M - $piece-size-M) / 2;
-    top: ($block-size-M - $piece-size-M) / 2;
+    left: calc(($block-size-M - $piece-size-M) / 2);
+    top: calc(($block-size-M - $piece-size-M) / 2);
   }
 }
 
@@ -57,15 +57,15 @@
   .black {
     height: $piece-size-S;
     width: $piece-size-S;
-    left: ($block-size-S - $piece-size-S) / 2;
-    top: ($block-size-S - $piece-size-S) / 2;
+    left: calc(($block-size-S - $piece-size-S) / 2);
+    top: calc(($block-size-S - $piece-size-S) / 2);
   }
 
   .white {
-    height: $piece-size-S - $piece-border-S * 2;
-    width: $piece-size-S - $piece-border-S * 2;
+    height: calc($piece-size-S - $piece-border-S * 2);
+    width: calc($piece-size-S - $piece-border-S * 2);
     border: $piece-border-S solid black;
-    left: ($block-size-S - $piece-size-S) / 2;
-    top: ($block-size-S - $piece-size-S) / 2;
+    left: calc(($block-size-S - $piece-size-S) / 2);
+    top: calc(($block-size-S - $piece-size-S) / 2);
   }
 }

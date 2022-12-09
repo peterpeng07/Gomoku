@@ -29,13 +29,13 @@
 
   .board-container {
     grid-template-columns: repeat(15, $block-size-fixed);
-    width: $block-size-fixed * 15;
+    width: calc($block-size-fixed * 15);
   }
 
   .board {
-    padding: $block-size-fixed / 2;
-    width: $block-size-fixed * 14;
-    height: $block-size-fixed * 14;
+    padding: calc($block-size-fixed / 2);
+    width: calc($block-size-fixed * 14);
+    height: calc($block-size-fixed * 14);
   }
 
   .block {
@@ -53,13 +53,13 @@
 
   .board-container {
     grid-template-columns: repeat(15, $block-size-M);
-    width: $block-size-M * 15;
+    width: calc($block-size-M * 15);
   }
 
   .board {
-    padding: $block-size-M / 2;
-    width: $block-size-M * 14;
-    height: $block-size-M * 14;
+    padding: calc($block-size-M / 2);
+    width: calc($block-size-M * 14);
+    height: calc($block-size-M * 14);
   }
 
   .block {
@@ -77,13 +77,13 @@
 
   .board-container {
     grid-template-columns: repeat(15, $block-size-S);
-    width: $block-size-S * 15;
+    width: calc($block-size-S * 15);
   }
 
   .board {
-    padding: $block-size-S / 2;
-    width: $block-size-S * 14;
-    height: $block-size-S * 14;
+    padding: calc($block-size-S / 2);
+    width: calc($block-size-S * 14);
+    height: calc($block-size-S * 14);
   }
 
   .block {
