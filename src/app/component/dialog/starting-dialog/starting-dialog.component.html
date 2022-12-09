@@ -2,7 +2,7 @@
 <div mat-dialog-content>
   <label>
     Enter your name:
-    <input type="text" size="20" [(ngModel)]="name">
+    <input type="text" size="20" [(ngModel)]="name" (change)="nameChange()">
   </label>
 </div>
 <div mat-dialog-actions align="end">
